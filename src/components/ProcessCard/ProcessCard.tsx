@@ -3,9 +3,10 @@ import { PCB, PCBState } from 'planificadorPCB';
 
 interface ProcessCardProps {
   process: PCB;
+  width: number;
 }
 
-export default function ProcessCard({ process }: ProcessCardProps) {
+export default function ProcessCard({ process, width }: ProcessCardProps) {
   const bgColor = useMemo(() => {
     switch (process.state) {
       case PCBState.READY:
@@ -19,7 +20,11 @@ export default function ProcessCard({ process }: ProcessCardProps) {
 
   return (
     <div
-      className={`relative h-32 w-32 place-content-end ${bgColor} text-black shadow shadow-stone-300 transition-colors`}
+      className={`relative place-content-end ${bgColor} shrink-0 text-black shadow shadow-stone-300 transition-colors `}
+      style={{
+        width: width,
+        height: width
+      }}
     >
       <p className=" font-semibold">DL: {process.duration} ms</p>
       <p className=" font-semibold">PO: {process.priority}</p>
