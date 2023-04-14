@@ -19,7 +19,7 @@ export default function ProcessCard({ process }: ProcessCardProps) {
 
   return (
     <div
-      className={`relative h-32 w-32 place-content-end ${bgColor} text-black transition-colors`}
+      className={`relative h-32 w-32 place-content-end ${bgColor} text-black shadow shadow-stone-300 transition-colors`}
     >
       <p className=" font-semibold">DL: {process.duration} ms</p>
       <p className=" font-semibold">PO: {process.priority}</p>
