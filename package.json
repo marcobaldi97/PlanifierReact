@@ -3,10 +3,10 @@
   "description": "This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier.",
   "homepage": "https://marcobaldi97.github.io/PlanifierReact",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
