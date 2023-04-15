@@ -1,7 +1,7 @@
 {
   "name": "planifier-react",
   "description": "This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier.",
-  "homepage": "https://marcobaldi97.github.io/",
+  "homepage": "https://marcobaldi97.github.io/react-scheduler",
   "version": "0.1.0",
   "private": false,
   "scripts": {
