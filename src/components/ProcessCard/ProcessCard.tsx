@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { PCB, PCBState } from 'planificadorPCB';
+import { PCB, PCBState } from 'PCB_Schedueler';
 
 interface ProcessCardProps {
   process: PCB;

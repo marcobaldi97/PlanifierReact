@@ -1,83 +1,29 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
-import {
-  PCBState,
-  QUANTUM,
-  Queue,
-  Queues,
-  planifierRR,
-  processCreator
-} from 'planificadorPCB';
+import { useState } from 'react';
 
 import ProcessCard from './ProcessCard/ProcessCard';
 import Controler from './Controler/Controler';
+import useSchedueler from 'hooks/useSchedueler';
+
+const QUANTUM = 500;
 
 function App() {
-  const [queues, setQueues] = useState<Queues>(new Array<Queue>(3).fill([]));
   const [quantum, setQuantum] = useState(QUANTUM);
   const [creationInterval, setCreationInterval] = useState(2500);
   const [maxPerQueue, setMaxPerQueue] = useState(10);
   const [queuesAmount, setQueuesAmount] = useState(3);
-  const [started, setStarted] = useState(false);
   const [isRunning, setIsRunning] = useState(true);
-
-  const cleanupDoneProcesses = useCallback(() => {
-    setQueues((currentQueues) =>
-      currentQueues.map((queue) =>
-        queue.filter((process) => process.state !== PCBState.DONE)
-      )
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!isRunning) return;
-
-    const intervalKey = setInterval(
-      () => processCreator(queues, setQueues, maxPerQueue, quantum),
-      creationInterval
-    );
-
-    const cleanupIntervalKey = setInterval(
-      cleanupDoneProcesses,
-      creationInterval * 15
-    );
-
-    return () => {
-      clearInterval(intervalKey);
-      clearInterval(cleanupIntervalKey);
-    };
-  }, [
-    isRunning,
-    queues,
-    quantum,
-    creationInterval,
-    maxPerQueue,
-    cleanupDoneProcesses
-  ]);
-
-  useEffect(() => {
-    if (!started) {
-      planifierRR(queues, setQueues, quantum);
-
-      setStarted(true);
-    }
-  }, [started, quantum, queues]);
-
-  useEffect(() => {
-    setQueues((currentQueues) => {
-      const newQueues = [...currentQueues].slice(0, queuesAmount);
-
-      for (let i = 0; i < queuesAmount; i++) {
-        newQueues[i] = newQueues[i] ? newQueues[i] : [];
-      }
-
-      return newQueues;
-    });
-  }, [queuesAmount]);
 
   function toggleisRunning() {
     setIsRunning(!isRunning);
   }
+
+  const { queues, cleanupDoneProcesses } = useSchedueler({
+    creationInterval,
+    isRunning,
+    maxPerQueue,
+    quantum,
+    queuesAmount
+  });
 
   return (
     <div className="relative flex min-h-screen w-auto flex-col   bg-gray-900 p-8 font-mono text-white">
